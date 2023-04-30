@@ -92,6 +92,37 @@ void print_lastname (struct studentInfo *students, int number) {
     }   
 }
 
+// convert date 
+int convertDate(char *date) {
+    int day, month, year;
+    sscanf(date, "%d/%d/%d", &day, &month, &year);
+    return year * 10000 + month * 100 + day;
+}
+
+// find oldest student
+void oldestStudent(struct studentInfo *students, int number) {
+    int oldestIndex = 0;
+    for (int i = 0; i < number; i++) {
+        if (convertDate(students[i].birthDate) < convertDate(students[oldestIndex].birthDate)) {
+            oldestIndex = i;
+        }
+    }
+    printf("\nThe oldest student is:\n");
+    print_studentinfo(students, oldestIndex);
+}
+
+// find youngest student 
+void youngestStudent(struct studentInfo *students, int number) {
+    int youngestIndex = 0;
+    for (int i = 0; i < number; i++) {
+        if (convertDate(students[i].birthDate) > convertDate(students[youngestIndex].birthDate)) {
+            youngestIndex = i;
+        }
+    }
+    printf("\nThe youngest student is:\n");
+    print_studentinfo(students, youngestIndex);
+}
+
 //swap structure
 void swap_students(struct studentInfo *students, int i, int p) {
     struct studentInfo temp = students[i];
@@ -192,8 +223,21 @@ int main(){
     printf("\n");
     print_lastname (students, number);
 
+    // Task7 - Oldest students
+    oldestStudent(students, number);
+
+    // Task8 - Youngest students 
+    youngestStudent(students, number);
+
+    
+
     //Task10 - sort GPA (selection sort)
     sort_GPA(students, number);
     printf("\nStudents list in GPA decreasing order: \n");
     print_table (students, number);
+
+    // Task9 - find student ID
+    // char *inputID;
+    // printf("\nEnter student ID you want to find: ");
+    // scanf("%s", &inputID);
 }
